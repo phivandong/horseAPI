@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-configuration>
+    <session-factory>
+        <property name="connection.url">jdbc:mysql://localhost:3306/horseAPI</property>
+        <property name="connection.username">horseAPI</property>
+        <property name="connection.password">horseAPI</property>
+        <property name="dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
+        <property name="hibernate.hbm2ddl.auto">create-drop</property>
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.format_sql">true</property>
+
+        <mapping class="com.pvdong.lesson3.entity.Account" />
+        <mapping class="com.pvdong.lesson3.entity.HorseAccount" />
+        <mapping class="com.pvdong.lesson3.entity.Horse" />
+        <mapping class="com.pvdong.lesson3.entity.Trainer" />
+
+    </session-factory>
+</hibernate-configuration>
