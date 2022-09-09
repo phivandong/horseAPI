@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -17,7 +16,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -31,10 +29,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
-//@SpringBootTest
-//@AutoConfigureMockMvc
-@WebMvcTest(HorseController.class)
-@Transactional
+@SpringBootTest
+@AutoConfigureMockMvc
 public class ControllerTests {
     @Autowired
     private MockMvc mockMvc;
@@ -79,7 +75,8 @@ public class ControllerTests {
                 .content(record);
 
         mockMvc.perform(mockHttpServletRequestBuilder)
-                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$", Matchers.notNullValue()))
                 .andExpect(jsonPath("$.name", Matchers.is("Coco Pommel")));
     }

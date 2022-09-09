@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @ExtendWith(SpringExtension.class)
 @DataJpaTest(properties = {
         "spring.test.database.replace=NONE",
-        "spring.datasource.url=jdbc:mysql://localhost:3306/horseAPI"
+        "spring.datasource.url=jdbc:mysql://localhost:3306/horseDB"
 })
 public class RepositoryTests {
     @Autowired
