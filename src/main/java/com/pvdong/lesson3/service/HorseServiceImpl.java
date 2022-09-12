@@ -14,7 +14,7 @@ import java.util.List;
 public class HorseServiceImpl implements HorseService {
 
     @Autowired
-    HorseRepository horseRepository;
+    private HorseRepository horseRepository;
 
     @Override
     public List<Horse> findByTrainerIdAndYear(Integer trainerId, Integer year) {

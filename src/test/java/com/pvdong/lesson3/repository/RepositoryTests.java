@@ -1,8 +1,6 @@
 package com.pvdong.lesson3.repository;
 
 import com.pvdong.lesson3.entity.Horse;
-import com.pvdong.lesson3.exception.HorseAlreadyExistsException;
-import com.pvdong.lesson3.service.HorseServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +9,6 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import javax.persistence.EntityManager;
-import javax.sql.DataSource;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -26,17 +22,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @ExtendWith(SpringExtension.class)
 @DataJpaTest(properties = {
         "spring.test.database.replace=NONE",
-        "spring.datasource.url=jdbc:mysql://localhost:3306/horseDB"
 })
 public class RepositoryTests {
     @Autowired
-    private DataSource dataSource;
-
-    @Autowired
     private JdbcTemplate jdbcTemplate;
-
-    @Autowired
-    private EntityManager entityManager;
 
     @Autowired
     private HorseRepositoryBaseImpl horseRepositoryBase;
@@ -46,9 +35,7 @@ public class RepositoryTests {
 
     @Test
     void injectedComponentsAreNotNull() {
-        assertThat(dataSource).isNotNull();
         assertThat(jdbcTemplate).isNotNull();
-        assertThat(entityManager).isNotNull();
         assertThat(horseRepositoryBase).isNotNull();
         assertThat(horseRepository).isNotNull();
     }
