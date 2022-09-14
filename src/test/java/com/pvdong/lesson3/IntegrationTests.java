@@ -34,8 +34,8 @@ public class IntegrationTests {
         Integer id = horseResult.getBody().getId();
 
         ResponseEntity<List<Horse>> horses = horseController.getAllHorses();
-        assertThat(horses.getBody()).element(13).hasFieldOrPropertyWithValue("name", "Snips");
+        assertThat(horses.getBody()).element(14).hasFieldOrPropertyWithValue("name", "Snips");
         horseController.deleteHorse(id);
-//        assertThat(horseController.getAllHorses().getBody()).is;
+        assertThat(horseController.getAllHorses().getBody()).extracting(Horse::getId).doesNotContain(id);
     }
 }

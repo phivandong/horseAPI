@@ -42,7 +42,7 @@ public class HorseServiceImpl implements HorseService {
 
     @Override
     public Horse findHorseById(Integer id) {
-        return horseRepository.getById(id);
+        return horseRepository.findById(id).get();
     }
 
     @Override

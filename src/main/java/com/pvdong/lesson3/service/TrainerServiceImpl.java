@@ -43,7 +43,7 @@ public class TrainerServiceImpl implements TrainerService {
 
     @Override
     public Trainer findTrainerById(Integer id) {
-        return trainerRepository.getById(id);
+        return trainerRepository.findById(id).get();
     }
 
     @Override
