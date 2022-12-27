@@ -16,7 +16,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(SpringExtension.class)
@@ -53,7 +52,7 @@ public class RepositoryTests {
     public void testCustomQuery() {
         List<Horse> horses = horseRepositoryBase.customFilterMethod(1, 2010);
         System.out.println(horses);
-        assertEquals(2, horses.size());
+        assertThat(horses.size()).isEqualTo(2);
         assertThat(horseRepositoryBase.customFilterMethod(1, 2010)).hasSize(2);
     }
 
@@ -93,7 +92,7 @@ public class RepositoryTests {
         });
 //        List<Horse> horseList = jdbcTemplate.query("select * from horse", new BeanPropertyRowMapper<>(Horse.class));
 //        System.out.println(horseList);
-        assertEquals(2, horseList.size());
-        assertEquals(new ArrayList<>(horses), horseList);
+        assertThat(horseList.size()).isEqualTo(2);
+        assertThat(horseList).isEqualTo(new ArrayList<>(horses));
     }
 }

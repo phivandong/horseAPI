@@ -22,7 +22,7 @@ public class SystemTests {
     private int port;
 
     @Test
-    public void testCreateReadPutDelete() throws Exception {
+    public void testCreateReadUpdateDelete() throws Exception {
         RestTemplate restTemplate = new RestTemplate();
         String url = new URL("http://localhost:" + port + "/api/horse").toString();
 

@@ -19,9 +19,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -65,11 +67,23 @@ public class ServiceTests {
         System.out.println(horseList);
 
         lenient().when(horseRepository.existsByName(horse3.getName())).thenReturn(true);
-        assertThrows(HorseAlreadyExistsException.class, () -> horseService.saveHorse(horse3));
+        assertThatThrownBy(() -> horseService.saveHorse(horse3)).isInstanceOf(HorseAlreadyExistsException.class);
 
         System.out.println(horseList);
-        assertEquals(2, horseList.size());
+        assertThat(horseList.size()).isEqualTo(2);
         verify(horseRepository, times(1)).findAll();
+    }
+
+    @Test
+    void testFindHorse() throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        final Horse expectedHorse = new Horse(13, "Spitfire", sdf.parse("2020-07-01 01:14:17.391"));
+        when(horseRepository.findById(anyInt())).thenReturn(Optional.of(expectedHorse));
+
+        final Horse actual = horseService.findHorseById(getRandomInt());
+        assertThat(actual).usingRecursiveComparison().isEqualTo(expectedHorse);
+        verify(horseRepository, times(1)).findById(anyInt());
+        verifyNoMoreInteractions(horseRepository);
     }
 
     @Test
@@ -116,6 +130,10 @@ public class ServiceTests {
 
         List<Horse> foundHorseList = horseService.findByTrainerId(10);
         System.out.println(foundHorseList);
-        assertEquals(requiredQuery, foundHorseList);
+        assertThat(foundHorseList).isEqualTo(requiredQuery);
+    }
+
+    private int getRandomInt() {
+        return new Random().ints(1, 10).findFirst().getAsInt();
     }
 }
